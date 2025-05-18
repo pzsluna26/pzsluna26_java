@@ -56,7 +56,7 @@ class Customer {//고객
   
     //정보 출력 메소드
     public void show() { 
-    	System.out.println("름: " + cname + "도시: " + city + "나이: " + age);
+    	System.out.println(" 이름:  " + cname + "도시: " + city + "나이: " + age);
     }     
     @Override
     // toString은 사용한 클래스 customer을 호출하면 반환값을 줌. 
