@@ -1,4 +1,7 @@
 package com.ruby.java.ch07.abstraction;
+//상속 = 단일상속(부자 클래스는 단일 상속만 가능)
+//다중상속(Messenger, Workfile 을 다중상속 받는 갤럭시와 아이폰)
+
 
 public interface Messenger {
 	// 부모클래스 변수 선언 및 추상메서드 선언(자녀 메서드에서 구현해야함)

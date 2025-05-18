@@ -115,6 +115,12 @@ abstract class Customer2 {
 		return "고객명: "+ cname + "도시: "+ city + "나이: " + age;
 	}
 
+	
+	/* 추상메서드
+	 * 상속받는 클래스가 이 메서드를 반드시 구현하게 하려고 쓴다.
+	 * 부모클래스(Customer2)가 틀만 정해 주고,
+	 * 자식클래스(레귤러, 프리미엄) 가 각자 다르게 할인로직을 구현하기 위함이다! 
+	 */
 	abstract double applyDiscount(double totalAmount);
 		
 }
@@ -142,6 +148,10 @@ class PremiumCustomer extends Customer2 {
 		super(name, city, age);
 	}
 
+	/* 할인계산
+	 * 10000 * 0.1 = 1000원 (할인되는 금액)
+	 * 10000 * (1-0.1) = 9000원 (할인적용된 금액)
+	 */
 	@Override
 	double applyDiscount(double totalAmount) {
 		return totalAmount * (1 - PREMIUMDISCOUNT_RATE);
@@ -164,6 +174,16 @@ class Order2 {
 	}
 
 
+	/* 쇼핑 장바구니를 구현하는 메서드
+	 * itemCount는 지금까지 담은물건 개수이고, 
+	 * items.length는 장바구니에 담을 수 있는 최대 개수야 !
+	 * 
+	 *  아직 장바구니에 자리가 있으면,
+	 *  items[] 배열에 물건을 넣고, 
+	 *  quantities[] 배열에 수량도 넣어.
+	 *  그리고 item.reduceStock(quantity); 로 재고에서 해당 수량만큼 빼줘
+	 *  마지막으로 itemCount 를 1증가 시켜서 배열의 다음칸으로 이동할 준비를 해.
+	 */
 	public void addItem(Item2 item, int quantity) {
 		if(itemCount < items.length) {
     		items[itemCount] = item;
@@ -174,7 +194,13 @@ class Order2 {
     		System.out.println("주문 가능한 아이템 수 초과 ");
     	}
     }
-
+	
+	/* 장바구니에 담긴 물건 전체 가격을 계산하는 메서드!
+	 * total이라는 돈주머니에 처음엔 0원이 들어있었음!
+	 * 반복문으로 장바구니에 들어있는 각 물건의 가격*수량을 계산해서,
+	 * total에 하나씩 더해줘
+	 * 마지막에 total을 반환해서 전체 금액을 알려주는거야!
+	 * */
 	public double calculateTotal() {
 		double total = 0;
 		for(int i=0; i<itemCount; i++) {

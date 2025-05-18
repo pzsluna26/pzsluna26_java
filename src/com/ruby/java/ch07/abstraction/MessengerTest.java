@@ -1,4 +1,6 @@
 package com.ruby.java.ch07.abstraction;
+//상속 = 단일상속(부자 클래스는 단일 상속만 가능)
+//다중상속(Messenger, Workfile 을 다중상속 받는 갤럭시와 아이폰)
 
 public class MessengerTest {
 
@@ -15,10 +17,16 @@ public class MessengerTest {
 		iphone.setMessage("hello");
 		iphone.clearMessage();
 		
+		iphone.draw_submitButton();
+		iphone.draw_textBox();
+		
 		galaxy.setLogin(true);
 		galaxy.getMessage();
 		galaxy.setMessage("hi");
 		galaxy.changeKeyboard();
+		
+		galaxy.fileDownload();
+		galaxy.fileUpload();
 
 	}
 
