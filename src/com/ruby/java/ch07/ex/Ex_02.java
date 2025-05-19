@@ -173,7 +173,7 @@ class Order2 {
 		this.itemCount = 0;
 	}
 
-
+	
 	/* 쇼핑 장바구니를 구현하는 메서드
 	 * itemCount는 지금까지 담은물건 개수이고, 
 	 * items.length는 장바구니에 담을 수 있는 최대 개수야 !
