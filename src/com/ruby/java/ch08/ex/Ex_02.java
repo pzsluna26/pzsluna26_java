@@ -1,5 +1,5 @@
 package com.ruby.java.ch08.ex;
-// 내부클래스구현
+// enum클래스
 /*전체 개요
 
 이 예제는 "귤(Mandarin)의 종류"를 enum으로 정의하고, 해당 enum에 가격 정보(정수)를 붙여서 다음을 보여줍니다:

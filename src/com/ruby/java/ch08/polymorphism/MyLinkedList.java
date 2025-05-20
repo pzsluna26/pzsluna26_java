@@ -35,19 +35,23 @@ public class MyLinkedList {
 		}
 	}
 	
+	// 앞 노드가 '삭제대상노드의 다음 노드'를 가리키게 만들기.
 	public void remove(String data) {
 		if (head == null) return;
 		
-		Node next = head;
-		Node pre = null;
-		while(next.link != null) {
-	
+		Node next = head; // 맨 앞 노드부터 시작
+		Node pre = null; // 이전 노드를 기억해둘 변수
+		while(next.link != null) { 
+			 // 현재 노드의 값이 삭제하고 싶은 값인지 확인
 			if (data.equals(next.data)) {
+				// 이전 노드가 현재 노드의 다음 노드를 가리키게 해서
+		        // 현재 노드를 건너뜀 (즉, 삭제한 효과)
 				pre.link = next.link;
 				break;
 			}
-		pre = next;
-		next = next.link;
+			// 다음으로 이동
+			pre = next;
+			next = next.link;
 	}		
 	}
 	

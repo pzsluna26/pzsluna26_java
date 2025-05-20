@@ -26,7 +26,7 @@ class Item { // 제품
     // 재고 증가 메소드
     public void increaseStock(int quantity) {
     	stockQuantity += quantity;
-    	}
+	}
 
     public String getName() {
 		return name;
