@@ -84,6 +84,35 @@ class Library {
 	public Book searchBookByTitle(String title) {
 		return ;
 		//이부분 이해안감 다시해보기!
+		/*📚 sortBooksByTitle() 메서드
+		 *설명:
+
+			Arrays.sort()는 배열을 정렬하는 메서드입니다.
+			books 배열의 인덱스 0부터 top까지의 요소를 정렬합니다.
+			(b1, b2) -> b1.getTitle().compareTo(b2.getTitle())는 람다 표현식으로,
+			두 Book 객체의 제목을 사전순으로 비교하여 정렬 순서를 결정합니다.
+			책장에 책들이 어지럽게 꽂혀 있을 때, 제목을 기준으로 가나다순으로 정리하는 것과 같습니다.
+			
+			🔢 sortBooksByISBN() 메서드
+			설명:
+
+			Arrays.sort()를 사용하여 books 배열의 인덱스 0부터 top까지의 요소를 정렬합니다.
+			(b1, b2) -> Integer.parseInt(b1.getISBN()) - Integer.parseInt(b2.getISBN())는 람다 표현식으로, 두 Book 객체의 ISBN을 정수로 변환하여 크기를 비교합니다.
+			비유:
+			
+			책의 ISBN 번호를 기준으로 숫자가 작은 순서대로 정렬하는 것과 같습니다.
+			
+			🔍 searchBookByTitle(String title) 메서드
+			설명:
+
+			for 루프를 사용하여 books 배열의 인덱스 0부터 top까지 순회합니다.
+			각 Book 객체의 제목이 매개변수 title과 일치하는지 확인합니다.
+			일치하는 책을 찾으면 해당 Book 객체를 반환합니다.
+			일치하는 책이 없으면 null을 반환합니다.
+			비유:
+			
+			도서관에서 특정 제목의 책을 찾기 위해 한 권씩 제목을 확인하는 것과 같습니다.
+		 * */
 	}
 	
 }

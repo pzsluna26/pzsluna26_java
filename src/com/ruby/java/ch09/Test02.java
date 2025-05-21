@@ -27,6 +27,9 @@ public static void main(String[] args) {
 	System.out.println(System.identityHashCode(s2)+":" + System.identityHashCode(s4));//같은 값
 	//객체의 참조값을 기반으로 한 해시값을 반환
 	//Object 클래스의 원래 hashCode()와 동일하게 동작
+	//System.identityHashCode()
+	//이 메서드는 객체의 클래스에서 hashCode() 메서드를 오버라이드했는지 여부와 상관없이, 
+	//원래 Object 클래스에서 제공하는 기본 hashCode() 값을 반환해.
 	System.out.println(s2.hashCode()+":" + s4.hashCode());//같은 값
 	//s2.hashCode()는 "java"라는 문자열의 내용에 기반한 해시값을 반환
 	
@@ -56,7 +59,9 @@ public static void main(String[] args) {
 	} else {
 		System.out.println("s1.equals(s5)::다른 문자열을 가집니다.");
 	}
-
+	//equalsIgnoreCase()란?
+	//equalsIgnoreCase()는 String 클래스의 메서드로, 두 문자열의 내용을 비교할 때 대소문자의 차이를 무시하고 비교해요.
+	//즉, "Hello"와 "hello"는 이 메서드를 사용하면 같다고 판단해요.
 	if (s1.equalsIgnoreCase(s5)) {
 		System.out.println("s1.equalsIgnoreCase(s5)::동일 문자열을 가집니다.");
 	} else {
@@ -65,3 +70,25 @@ public static void main(String[] args) {
 		
 	}
 }
+
+/*
+ 이 예제의 핵심은:
+
+== 연산자는 두 객체가 같은 메모리 주소를 참조하는지 확인해.
+.equals() 메서드는 두 객체의 내용이 같은지 확인해.
+자바에서는 문자열을 비교할 때 ==보다 .equals()를 사용하는 것이 일반적이야.
+왜냐하면 ==는 객체의 참조(주소)를 비교하고, .equals()는 객체의 내용을 비교하기 때문이야.
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * */
+ 
