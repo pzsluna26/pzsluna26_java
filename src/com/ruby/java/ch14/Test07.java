@@ -1,7 +1,21 @@
 package com.ruby.java.ch14;
 
+import java.util.ArrayList;
+import java.util.Collections;
 
+class Student{
+    private String name;
+    private int korScore;
+    private int engScore;
+    private int mathScore;
 
+    public Student(String name, int korScore, int engScore, int mathScore) {
+        this.name = name;
+        this.korScore = korScore;
+        this.engScore = engScore;
+        this.mathScore = mathScore;
+    }
+}
 //(7) 제네릭 함수형 인터페이스
 interface MyFunc<T> {
 	T modify(T t);//리턴값이 T 타입
@@ -22,7 +36,9 @@ public class Test07 {
 	}
 
 	public static void main(String[] args) {
-
+		ArrayList<Student> classRoom = new ArrayList<>();
+		Collections.sort(classRoom, c);
+		
 		MyFunc<String> mf1 = (str) -> str.toUpperCase() + ":" + str.length();
 		System.out.println(mf1.modify("java"));
 		System.out.println(mf1.modify("java programming"));
@@ -46,7 +62,7 @@ public class Test07 {
 			return result;
 		};
 		//람다식을 전달
-		String s1 = test(sf1, str);//실행 흐름을 이해하는 노력 필요
+		String s1 = test(sf1, str);//실행 흐름을 이해하는 노력 필요 > 자료구조에서 comparator를 이해함
 		System.out.println(s1);
 
 		//람다식을 메소드 매개변수로 전달
