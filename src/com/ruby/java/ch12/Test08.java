@@ -1,5 +1,6 @@
 package com.ruby.java.ch12;
 
+import java.io.*;
 import java.util.Properties;
 
 public class Test08 {
@@ -15,7 +16,5 @@ public class Test08 {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }
