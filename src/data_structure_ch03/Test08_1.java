@@ -3,114 +3,140 @@ package data_structure_ch03;
 import java.util.Arrays;
 import java.util.Comparator;
 
-/*
- * 3장 과제2 : 객체 배열 정렬/검색 - 람다식사용
- * 
-* Comparator를 사용하는 방법
-* MyComparator implements Comparator<>
-* MyComparator myComparator = new MyComparator();
-* 
-* Arrays.sort(array, myComparator);
-* Collections.sort(list, new MyComparator());
-*/
-
 class Fruit4 {
 	String name;
 	int price;
 	String expire;
 
+	public Fruit4(String name, int price, String expire) {
+		this.name = name;
+		this.price = price;
+		this.expire = expire;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public String getExpire() {
+		return expire;
+	}
+
+	@Override
+	public String toString() {
+		return "과일명: " + name + ", 가격: " + price + ", 유통기한: " + expire;
+	}
 }
-//교재 123~129 페이지 참조하여 구현
-class FruitName implements Comparator<Fruit4>{}
-class FruitPrice implements Comparator<Fruit4>{}
+
+// 이름 기준 정렬
+class FruitName implements Comparator<Fruit4> {
+	public int compare(Fruit4 f1, Fruit4 f2) {
+		return f1.getName().compareTo(f2.getName());
+	}
+}
+
+// 가격 기준 정렬
+class FruitPrice implements Comparator<Fruit4> {
+	public int compare(Fruit4 f1, Fruit4 f2) {
+		return Integer.compare(f1.getPrice(), f2.getPrice());
+	}
+}
 
 public class Test08_1 {
 
-	private static void sortData(Fruit4[] arr, Comparator<Fruit4> cc_price) {}
+	private static void showData(String msg, Fruit4[] arr) {
+		System.out.println(msg);
+		for (Fruit4 f : arr) {
+			System.out.println(f);
+		}
+	}
+
+	private static void sortData(Fruit4[] arr, Comparator<Fruit4> comp) {
+		Arrays.sort(arr, comp);
+	}
+
+	// 직접 구현한 이진탐색
+	private static int binarySearch(Fruit4[] arr, Fruit4 key, Comparator<Fruit4> comp) {
+		int pl = 0;
+		int pr = arr.length - 1;
+		while (pl <= pr) {
+			int pc = (pl + pr) / 2;
+			int temp = comp.compare(key, arr[pc]);
+
+			if (temp == 0) return pc;
+			else if (temp < 0) pr = pc - 1;
+			else pl = pc + 1;
+		}
+		return -1;
+	}
 
 	public static void main(String[] args) {
 
-		Fruit4[] arr = {new Fruit4("사과", 200, "2023-5-8"), 
-				new Fruit4("감", 500, "2023-6-8"),
-				new Fruit4("대추", 200, "2023-7-8"), 
-				new Fruit4("복숭아", 50, "2023-5-18"), 
-				new Fruit4("수박", 880, "2023-5-28"),
-				new Fruit4("산딸기", 10, "2023-9-8") };
-		
-		//익명클래스 버전 : 인터페이스를 구현한 익명클래스!
-		Arrays.sort(arr, new Comparator<Fruit4>{
-			int compare(Fruit4 f1, Fruit f2) {
+		Fruit4[] arr = {
+			new Fruit4("사과", 200, "2023-5-8"),
+			new Fruit4("감", 500, "2023-6-8"),
+			new Fruit4("대추", 200, "2023-7-8"),
+			new Fruit4("복숭아", 50, "2023-5-18"),
+			new Fruit4("수박", 880, "2023-5-28"),
+			new Fruit4("산딸기", 10, "2023-9-8")
+		};
+
+		// 1. 정렬 전 출력
+		System.out.println("정렬 전 객체 배열:");
+		showData("초기 데이터", arr);
+
+		// 2. 이름 기준 익명 클래스 정렬
+		Arrays.sort(arr, new Comparator<Fruit4>() {
+			public int compare(Fruit4 f1, Fruit4 f2) {
 				return f1.name.compareTo(f2.name);
 			}
 		});
-		
-		//람다식 버전: 위 식을 람다식으로 바꾼것
-		Arrays.sort(arr, (f1, f2) -> f1.name.compareTo(f2.name);
+		showData("\n익명 클래스(이름 기준) 정렬 후", arr);
 
-		});
-		
-		
-		System.out.println("\n정렬전 객체 배열: ");
-		showData("정렬전 객체", arr);
-		
-		FruitName cc = new FruitName();
-		System.out.println("\n comparator cc 객체를 사용:: ");
-		Arrays.sort(arr, cc);
-		showData("Arrays.sort(arr, cc) Name 정렬 후", arr);
-		
-		sortData(arr, new FruitPrice());
-		showData("Arrays.sort(arr, cc)  Price 실행후", arr);
-		
-		// 람다식은 익명클래스 + 익명 객체이다
-		Comparator<Fruit4> cc_expire = (a, b) -> a.expire.compareTo(b.expire);
-		Arrays.sort(arr, cc_expire); // 람다식으로 만들어진 객체를 사용
-		showData("람다식 변수 cc_expire을 사용한 Arrays.sort(arr, cc) 정렬 후", arr);
-		
-		Arrays.sort(arr, (a, b) -> a.getPrice() - b.getPrice()); 
-		showData("람다식: (a, b) -> a.getPrice() - b.getPrice()을 사용한 Arrays.sort(arr, cc) 정렬 후", arr);
+		// 3. 람다식 정렬 (이름 기준)
+		Arrays.sort(arr, (f1, f2) -> f1.name.compareTo(f2.name));
+		showData("\n람다식(이름 기준) 정렬 후", arr);
 
-		System.out.println("\n익명클래스 객체로 정렬(가격)후 객체 배열: ");
+		// 4. 이름 기준 정렬 클래스 사용
+		FruitName nameComparator = new FruitName();
+		Arrays.sort(arr, nameComparator);
+		showData("\nFruitName comparator 정렬 후", arr);
+
+		// 5. 가격 기준 정렬 클래스 사용
+		FruitPrice priceComparator = new FruitPrice();
+		sortData(arr, priceComparator);
+		showData("\nFruitPrice comparator 정렬 후", arr);
+
+		// 6. 유통기한 기준 람다식 정렬
+		Comparator<Fruit4> expireComparator = (a, b) -> a.getExpire().compareTo(b.getExpire());
+		Arrays.sort(arr, expireComparator);
+		showData("\n람다식(유통기한 기준) 정렬 후", arr);
+
+		// 7. 람다식 가격 정렬
+		Arrays.sort(arr, (a, b) -> a.getPrice() - b.getPrice());
+		showData("\n람다식(가격 기준) 정렬 후", arr);
+
+		// 8. 이름 기준 익명 클래스 comparator 사용
 		Arrays.sort(arr, new Comparator<Fruit4>() {
-			@Override
 			public int compare(Fruit4 a1, Fruit4 a2) {
 				return a1.getName().compareTo(a2.getName());
 			}
 		});
-		System.out.println("\ncomparator 정렬(이름)후 객체 배열: ");
-		showData("name comparator - 익명 객체를 사용한 정렬:", arr);
-		
-		//익명 클래스를 사용한 comparator 객체
-		Comparator<Fruit4> cc_name = new Comparator<Fruit4>() {// 익명클래스 사용
+		showData("\n익명 객체(이름 기준) 정렬 후", arr);
 
-			@Override
-			public int compare(Fruit4 f1, Fruit4 f2) {
-				// TODO Auto-generated method stub
-				return (f1.name.compareTo(f2.name));
-			}
-
-		};
-		Comparator<Fruit4> cc_price = new Comparator<Fruit4>() {
-
-			@Override
-			public int compare(Fruit4 f1, Fruit4 f2) {
-				return f1.getPrice() - f2.getPrice();
-			}// 익명클래스 사용
-
-		};
-
+		// 9. Arrays.binarySearch() 이름 기준
 		Fruit4 newFruit4 = new Fruit4("수박", 880, "2023-5-18");
-		/*
-		 * 교재 115 Arrays.binarySearch에 의한 검색
-		 */
-		int result3Index = Arrays.binarySearch(arr, newFruit4, cc_name);
-		System.out.println("\nArrays.binarySearch([수박,880,2023-5-18]) 조회결과::" + result3Index);
-		
-		result3Index = binarySearch(arr, newFruit4, cc_price);//교재 113 binSearch() 함수를 고쳐서 구현 
-		System.out.println("\nbinarySearch([수박,880,2023-5-18]) 조회결과::" + result3Index);
+		int resultIndex = Arrays.binarySearch(arr, newFruit4, nameComparator);
+		System.out.println("\nArrays.binarySearch(이름 기준) 결과: " + resultIndex);
 
-		sortData(arr, cc_price);
-		System.out.println("\ncomparator 정렬(가격)후 객체 배열: ");
-		showData("comparator를 사용한 정렬후:", arr);	
+		// 10. 직접 구현한 이진 탐색 (가격 기준)
+		sortData(arr, priceComparator); // 정렬 먼저 해야 함
+		resultIndex = binarySearch(arr, newFruit4, priceComparator);
+		System.out.println("\nbinarySearch(가격 기준) 결과: " + resultIndex);
+		showData("\n최종 가격 기준 정렬된 배열:", arr);
 	}
 }
-
