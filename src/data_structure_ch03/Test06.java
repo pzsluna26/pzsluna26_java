@@ -2,9 +2,20 @@ package data_structure_ch03;
 import java.util.Arrays;
 
 public class Test06 {
+	/*show data(String msg, String[]배열 )
+	 *sortData(String[] 배열)
+	 *showData(String msg, String []배열 )
+	 *linearSearch(String[]배열, 찾는 index)
+	 *binarySearch(Strig]배열, 찾는 index )
+	 * */
+
 	
 	// 1. 문자열 배열 출력
+<<<<<<< HEAD
 	static void showData(String str, String data[]) {
+=======
+	static void showData(String str,String data[]) {
+>>>>>>> branch 'main' of https://github.com/pzsluna26/pzsluna26_java.git
 		System.out.println(str + "배열: ");
 		for(String item : data) {
 			System.out.println(item);
@@ -39,8 +50,12 @@ public class Test06 {
 		return -1; //왜 -1인가!?
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'main' of https://github.com/pzsluna26/pzsluna26_java.git
 	 // 4. 이진 검색 (binary search) - 배열은 정렬되어 있어야 함
+<<<<<<< HEAD
 	static int binarySearch(String[] data, String key) {
 	    int pl = 0;
 	    int pr = data.length - 1;
@@ -57,7 +72,24 @@ public class Test06 {
 	    return -1; // 못 찾으면 -1
 	}
 
+=======
+    static int binarySearch(String[] data, String key) {
+        int pl = 0;
+        int pr = data.length - 1;
+>>>>>>> branch 'main' of https://github.com/pzsluna26/pzsluna26_java.git
 
+        while (pl <= pr) {
+            int pc = (pl + pr) / 2;
+            int cmp = key.compareTo(data[pc]);
+
+            if (cmp == 0) return pc;        // key와 일치
+            else if (cmp < 0) pr = pc - 1;  // 왼쪽 영역
+            else pl = pc + 1;               // 오른쪽 영역
+        }
+        return -1; // 못 찾음
+    }
+	
+	
 
     public static void main(String[] args) {
         String[] data = {"사과", "포도", "복숭아", "감", "산딸기", "블루베리", "대추", "수박", "참외"};

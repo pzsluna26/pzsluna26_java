@@ -24,6 +24,12 @@ class IntStack3 {
 		}
 	}
 	
+	/*
+	 * private int[] stk; // 스택용 배열
+	   private int capacity; // 스택의 크기
+	   private int top; // 스택 포인터 
+	 * */
+	
 //--- 생성자(constructor) ---//
 	public IntStack3(int maxlen) {
 		capacity = maxlen;

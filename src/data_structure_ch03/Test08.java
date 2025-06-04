@@ -10,21 +10,49 @@ import java.util.Comparator;
 class PhyscData3 {
 	String name;
 	int height;
+
+
 	double vision;
+	public PhyscData3(String name, int height, double vision) {
+		super();
+		this.name = name;
+		this.height = height;
+		this.vision = vision;
+	}
+	public String getName() {
+		return name;
+	}
 
+	public int getHeight() {
+		return height;
+	}
+	
+	public double getVision() {
+		return vision;
+	}
+
+	@Override
+	public String toString() {
+		return "[name=" + name + ", height=" + height + ", vision=" + vision + "]";
+	}
 }
-class NameHeightVision implements Comparator<PhyscData4>{
 
-}
-class NameOrder implements Comparator<PhyscData3>{
-
+class NameOrder implements Comparator<PhyscData3>{	
+	public int compare(PhyscData3 d1, PhyscData3 d2) {
+		return d1.name.compareTo(d2.name);
+	}
 }
 class HeightOrder implements Comparator<PhyscData3>{
-
+	public int compare(PhyscData3 d1, PhyscData3 d2) {
+		return Integer.compare(d1.height, d2.height);
+	}
 }
 class VisionOrder implements Comparator<PhyscData3>{
-
+	public int compare(PhyscData3 d1, PhyscData3 d2) {
+		return Double.compare(d1.vision, d2.vision);
+	}
 }
+
 public class Test08 {	
 	static final Comparator<PhyscData3> HEIGHT_ORDER = new HeightOrder();
 
@@ -57,6 +85,12 @@ public class Test08 {
 			}
 		});
 		showData("name로 정렬후 객체 배열", data);
+	}
+	static void showData(String msg, PhyscData3[] data) {
+		System.out.println(msg);
+		for(PhyscData3 d : data) {
+			System.out.println(d);
+		}
 	}
 
 }

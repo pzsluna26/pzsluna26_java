@@ -1,5 +1,7 @@
 package data_structure_ch02;
 
+import java.util.Arrays;
+
 /*
  * 2장 실습과제4 - 스트링 배열 정렬
  * 정렬된 배열에 insert하면 중간에 끼워 넣으면 큰 값들은 이동해야 하고 크기를 1 증가 처리가 필요 
@@ -13,8 +15,8 @@ public class Test02_14 {
 		showData("정렬후", data);
 		String[] newData = insertString(data, "banana"); //바나나 끼워넣기
 		showData("삽입후 크기가 증가된 정렬 배열", newData);
-		//Arrays.sort(data);
-		//Arrays.sort(data,(a,b)->a.compareTo(b)); 람다식
+		Arrays.sort(data);
+		Arrays.sort(data,(a,b)->a.compareTo(b)); //람다식
 		
 	}
 
@@ -54,7 +56,7 @@ public class Test02_14 {
 		String[] newArr = new String[n+1];
 		
 		int i=0;
-		while(i<n&&arr[i].compareTo(newStr)< 0) {
+		while(i< n && arr[i].compareTo(newStr)< 0) {
 			newArr[i]=arr[i];
 			i++;
 		}
