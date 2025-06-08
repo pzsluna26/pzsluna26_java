@@ -1,20 +1,10 @@
 package data_structure_ex;
-/*
- * 실습 4_3번
- * point(x,y) 객체를 스택에 저장
- * 좌표를 스택에 구현 소스 코드 - 5장에서 활용
- * 예외 처리 코드를 이해하는 것이 필요
- * 스택 구현을 배열이 아닌 list로 구현
- */
-
 
 import java.util.ArrayList;
 import java.util.List;
-/*
-* objectStack에 Point2 객체를 push, pop하는 코드를 구현 실습한다
-*/
 import java.util.Random;
 import java.util.Scanner;
+
 class Point2 {
 	private int ix;
 	private int iy;
@@ -27,7 +17,6 @@ class Point2 {
 	@Override
 	public String toString() {
 		return  ix +","+iy;
-	
 	}
 
 	@Override
@@ -38,17 +27,11 @@ class Point2 {
 			return this.ix == other.ix && this.iy == other.iy;
 		}
 		return false;
-
 	}
 }
 
 class ObjectStack{
-	/*
-	 * 정수스택 버젼을 참조하여 예외처리 완성
-	 * --- 실행시 예외: 스택이 비어있음 ---
-	 * generic class는 Throwable을 상속받을 수 없다 - 지원하지 않는다
-	 */
-	//--- 실행시 예외: 스택이 비어있음 ---//
+	
 	// generic class는 Throwable을 상속받을 수 없다 - 지원하지 않는다
 	public class EmptyGenericStackException extends Exception {
 		public EmptyGenericStackException() {
