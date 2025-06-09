@@ -24,6 +24,10 @@ class Student implements Comparable<Student> {
 	public String toString() {
 		return sid + ", " + sname + ", " + dept;
 	}
+
+	public String getSid() {
+		return sid;
+	}
 }
 
 public class Test03_09 {

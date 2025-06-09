@@ -73,13 +73,10 @@ class CircularQueue {
 		return it;
 	}
 
-	 public void clear() throws EmptyQueueException{
-		if(isEmpty()) {
-				throw new EmptyQueueException(); 
-		}		 
+	public void clear() {
 		front = rear = 0;
 		isEmptyTag = true;
-	}
+	} 
 
  	//--- 큐의 크기를 반환 ---//
 	public int getCapacity() {

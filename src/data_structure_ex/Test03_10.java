@@ -3,7 +3,7 @@ package data_structure_ex;
 import java.util.Arrays;
 import java.util.Comparator;
 
-class Student {
+class Student1 {
 
 	// 클래스 객체
 	private String sid;
@@ -11,7 +11,7 @@ class Student {
 	private String dept;
 
 	// 생성자: 객체의 필드값을 초기화 하는 것
-	public Student(String sid, String sname, String dept) {
+	public Student1(String sid, String sname, String dept) {
 		this.sid = sid;
 		this.sname = sname;
 		this.dept = dept;
@@ -21,7 +21,6 @@ class Student {
 	public String toString() {
 		return getSid() + ", " + sname + ", " + dept;
 	}
-
 	public String getSid() {
 		return sid;
 	}
