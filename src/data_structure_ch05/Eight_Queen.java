@@ -3,6 +3,7 @@ package data_structure_ch05;
 //이클립스 디버깅 실습 필요 : variables tab, Expressions tab 사용하기
 //92개 해 확인 필요
 import java.util.ArrayList;
+import java.util.Stack;
 import java.util.List;
 
 //https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/?ref=lbp
@@ -67,24 +68,10 @@ class Stack4 {
 
 	// --- 생성자(constructor) ---//
 	public Stack4(int capacity) {
-
+		this.capacity=capacity;
+		this.top=top;
 	}
 
-	// --- 스택에 x를 푸시 ---//
-	public boolean push(Point x) throws OverflowGenericStackException {
-
-
-	}
-
-	// --- 스택에서 데이터를 팝(정상에 있는 데이터를 꺼냄) ---//
-	public Point pop() throws EmptyGenericStackException {
-
-	}
-
-	// --- 스택에서 데이터를 피크(peek, 정상에 있는 데이터를 들여다봄) ---//
-	public Point peek() throws EmptyGenericStackException {
-
-	}
 
 	// --- 스택을 비움 ---//
 	public void clear() {
@@ -137,52 +124,106 @@ public class Eight_Queen {
 	int numberOfSolutions = 0; //92개 정답
 	int count = 0;//퀸 배치 갯수
 	int ix = 0, iy = 0;// 행 ix, 열 iy
-	Stack5 st = new Stack5(100); //100개를 저장할 수 있는 스택을 만들고
-	Point5 p = new Point5(ix, iy);//현 위치를 객체로 만들고
+	Stack<Point> st = new Stack<>(); //100개를 저장할 수 있는 스택을 만들고 => 자바 stack클래스로 변경 
+	Point p = new Point(ix, iy);//현 위치를 객체로 만들고
 	d[ix][iy] = 1;//현 위치에 queen을 넣었다는 표시를 하고
 	count++;
 	st.push(p);// 스택에 현 위치 객체를 push
 	ix++;//ix는 행별로 퀸 배치되는 것을 말한다.
 	iy = 0;//다음 행으로 이동하면 열은 0부터 시작
 	while (true) {
-		if (st.isEmpty() && ix == 8) //ix가 8이면 8개 배치 완료, stack이 empty가 아니면 다른 해를 구한다 
+		if (st.isEmpty() && ix == 8) 
+			//ix가 8이면 8개 배치 완료, stack이 empty가 아니면 다른 해를 구한다 
 			break;
-		if ((iy = nextMove(d, ix, iy))== -1) {//다음 이동할 열을 iy로 주는데 -1이면 더이상 이동할 열이 없음을 나타냄
+		if ((iy = nextMove(d, ix, iy))== -1) {
+			//다음 이동할 열을 iy로 주는데 -1이면 더이상 이동할 열이 없음을 나타냄
 		//pop()
 		}
 		//push()
-		if (count == 8) { //8개를 모두 배치하면
+		if (count == 8) { 
+			//8개를 모두 배치하면
 		}
 	}
 }
 
+	
+// 그 행에 이미 퀸이 있는지 검사하는 함수
+//배열 d에서 행 crow에 퀸을 배치할 수 있는지 조사
+public static boolean checkRow(int[][] d, int crow) { 
+		for(int j=0; j<8; j++) {
+			if(d[crow][j]== 1) {
+				return false;
+			}
+		}
+		return true; // 퀸 없음 → 안전
+}
 
-public static boolean checkRow(int[][] d, int crow) { //배열 d에서 행 crow에 퀸을 배치할 수 있는지 조사
+
+
+// 그 열에 이미 퀸이 있는지 검사하는 함수
+//배열 d에서 열 ccol에 퀸을 배치할 수 있는지 조사
+public static boolean checkCol(int[][] d, int ccol) {
+		for(int i=0; i<8; i++) {
+			if(d[i][ccol]==1) {
+				return false;
+			}
+		}
+		return true;
 
 }
 
-public static boolean checkCol(int[][] d, int ccol) {//배열 d에서 열 ccol에 퀸을 배치할 수 있는지 조사
-
-}
 //배열 d에서 행 cx, 열 cy에 퀸을 남서, 북동 대각선으로 배치할 수 있는지 조사
-public static boolean checkDiagSW(int[][] d, int cx, int cy) { // x++, y-- or x--, y++ where 0<= x,y <= 7
-
-}
+//x++, y-- or x--, y++ where 0<= x,y <= 7
+public static boolean checkDiagSW(int[][] d, int cx, int cy) { 
+	int x = cx, y = cy;
+	while(x >=0 && y <8) {
+		if(d[x][y] == 1) {
+			return false;
+		}
+			x--; 
+			y++;
+		}
+		x=cx; y=cy;
+		while(x < 8 && y >= 0) {
+			if(d[x][y] == 1) return false;
+			x++; 
+			y--;
+		}
+		return true;
+	}
 
 //배열 d에서 행 cx, 열 cy에 퀸을 남동, 북서 대각선으로 배치할 수 있는지 조사
-public static boolean checkDiagSE(int[][] d, int cx, int cy) {// x++, y++ or x--, y--
-
+//x++, y++ or x--, y--
+public static boolean checkDiagSE(int[][] d, int cx, int cy) {
+	
+    // 남동 ↘ 방향으로 검사
+	for(int x = cx +1, y = cy + 1; x < 8 && y < 8; x++, y++) {
+		if (d[x][y] == 1) return false;// 퀸이 있으면 안 됨
+	}
+	
+	// 북서 ↖ 방향으로 검사
+	for (int x = cx -1, y = cy -1; x >= 0 && y >= 0; x--, y--) {
+		if(d[x][y] == 1) return false;
+	}
+	return true; // 대각선에 퀸 없음 -> 안전함
 }
+
+
 //배열 d에서 (x,y)에 퀸을 배치할 수 있는지  조사
-public static boolean checkMove(int[][] d, int x, int y) {// (x,y)로 이동 가능한지를 check
+//(x,y)로 이동 가능한지를 check
+public static boolean checkMove(int[][] d, int x, int y) {
+	
 
 }
+
 //배열 d에서 현재 위치(row,col)에 대하여 다음에 이동할 위치 nextCol을 반환, 이동이 가능하지 않으면 -1를 리턴
-public static int nextMove(int[][] d, int row, int col) {// 현재 row, col에 대하여 이동할 col을 return
+//현재 row, col에 대하여 이동할 col을 return
+public static int nextMove(int[][] d, int row, int col) {
 
 }
 
-static void showQueens(int[][] data) {// 배열 출력
+//배열 출력
+static void showQueens(int[][] data) {
 
 }
 

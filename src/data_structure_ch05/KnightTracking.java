@@ -74,19 +74,8 @@ public class KnightTracking {
         	int i = cur.moveToward;
         	boolean moved = false;
         	
-
-        // 0. 8가지 방향으로 나이트 이동 시도
-    	while(i<8) {
     		
-    		// 1.point currentPoint = stack.peek(); 하나가져옴
-    		int nextX = cu
-    	}
-    	
-        	
-        	
-        	
-        	
-/*            // 8가지 방향으로 나이트 이동 시도
+            // 8가지 방향으로 나이트 이동 시도
         	while(i<8) {
         	// 현재위치에서 i번째 방향으로 이동한 다음 좌표를 계산해라.
         		int nextX = cur.x + moves[i].a;
@@ -117,7 +106,7 @@ public class KnightTracking {
         
         }	// 더 이상 이동할 곳이 없을 경우 폴스 리턴
         	return false;
-    }*/
+    }
 
     // 결과 출력
     private static void showTracking() {
