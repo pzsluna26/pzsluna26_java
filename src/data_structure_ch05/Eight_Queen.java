@@ -137,9 +137,9 @@ public class Eight_Queen {
 			break;
 		if ((iy = nextMove(d, ix, iy))== -1) {
 			//다음 이동할 열을 iy로 주는데 -1이면 더이상 이동할 열이 없음을 나타냄
-		//pop()
+			//pop()
 		}
-		//push()
+			//push()
 		if (count == 8) { 
 			//8개를 모두 배치하면
 		}
