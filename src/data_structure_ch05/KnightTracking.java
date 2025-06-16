@@ -66,16 +66,16 @@ public class KnightTracking {
         stack.push(new Point(startX, startY, 0));
         board[startX][startY] = 0; // 시작 위치는 첫 번째 이동
 
-        while (!stack.isEmpty()) {
+        	while (!stack.isEmpty()) {
             //현재 위치를 꺼내고,(pop말고 peek쓰는 이유: pop은 제거라서)
         	Point cur = stack.peek();
         	
         	//현재 몇번째 방향을 시도했는지 확인해라
         	int i = cur.moveToward;
         	boolean moved = false;
+        		
         	
-    		
-            // 8가지 방향으로 나이트 이동 시도
+        	// 8가지 방향으로 나이트 이동 시도
         	while(i<8) {
         	// 현재위치에서 i번째 방향으로 이동한 다음 좌표를 계산해라.
         		int nextX = cur.x + moves[i].a;
@@ -93,7 +93,7 @@ public class KnightTracking {
         		i++;
     		
     		 }
-        	// 이동 실패하면, 이전 칸으로 되돌아감(백트래킹)
+        	// 이동 실패하면, 이전 칸으로 되돌아감(백트래킹) 초기화시에 방문하지 않은 칸은 -1 로 약속했었음  
         	if(!moved) {
         		board[cur.x][cur.y] = -1;
         		stack.pop();

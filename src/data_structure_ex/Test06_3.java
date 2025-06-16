@@ -1,120 +1,136 @@
 package data_structure_ex;
-/*
- * 6장 구현과제3
- */
 
-class Polynomial3 implements Comparable<Polynomial3>{
-    double coef;           // 계수
-    int    exp;            // 지수
+class Polynomial3 implements Comparable<Polynomial3> {
+    double coef; // 계수
+    int exp;     // 지수
 
-    Polynomial3(){}
-    //--- 생성자(constructor) ---//
+    Polynomial3() {}
+
     Polynomial3(double coef, int exp) {
-        this.coef = coef;  this.exp = exp; 
+        this.coef = coef;
+        this.exp = exp;
     }
 
+    @Override
+    public int compareTo(Polynomial3 o) {
+        return o.exp - this.exp; // 내림차순 정렬
+    }
 }
+
 public class Test06_3 {
 
-	// --- 배열 요소 a[idx1]와 a[idx2]의 값을 교환 ---//
-	static void merge(Polynomial3[] a, int lefta, int righta, int leftb, int rightb ) {
-		 //body를 지우고 작성 훈련 연습이 도움이 된다 
-		Polynomial3 temp[] = new Polynomial3[30];
-		//구현코드
-	}
+    static void merge(Polynomial3[] a, int lefta, int righta, int leftb, int rightb) {
+        Polynomial3[] temp = new Polynomial3[30];
+        int i = lefta, j = leftb, k = 0;
+        while (i <= righta && j <= rightb) {
+            if (a[i].exp >= a[j].exp)
+                temp[k++] = a[i++];
+            else
+                temp[k++] = a[j++];
+        }
+        while (i <= righta) temp[k++] = a[i++];
+        while (j <= rightb) temp[k++] = a[j++];
+        for (int m = 0; m < k; m++)
+            a[lefta + m] = temp[m];
+    }
 
-	// --- 퀵 정렬(비재귀 버전)---//
-	static void MergeSort(Polynomial3[] a, int left, int right) {
-		int mid = (left+right)/2;
-		if (left == right) return;
-		MergeSort(a, left, mid);
-		MergeSort(a, mid+1, right);
-		merge(a, left, mid, mid+1, right);
-		return;
-	}
-	static void ShowPolynomial(String str, Polynomial3[] x, int count) {
-		//str 변수는 다항식 이름으로 스트링이다
-		//count가 -1이면 다항식 x의 length로 계산하고 -1이면 count가 다항식 항의 숫자이다 
-		//정렬후 다항식 x = 2.5x**7  + 3.8x**5  + 3.1x**4  + 1.5x**3  + 3.3x**2  + 4.0x**1  + 2.2x**0 
-		int n = 0;
-		if (count < 0)
-			n = x.length;
-		else
-			n = count;
-		//구현코드
-	}
-	static int AddPolynomial(Polynomial3[]x,Polynomial3[]y,Polynomial3[]z) {
-		//z = x + y, 다항식 덧셈 결과를 z로 주고 z의 항의 수 terms을 리턴한다 
-		int p=0,q=0,r=0;
-		int terms = 0;
-		//구현코드
-		return terms;
-		
-	}
-	static int addTerm(Polynomial3[]z, Polynomial3 term, int terms) {
-		//다항식 z에 새로운 항 term을 추가한다. 지수가 같은 항이 있으면 계수만 합한다
-		//추가된 항의 수를 count하여 terms으로 리턴한다.
-		//구현코드
-		return ++terms;
-			
-	}
-	static int MultiplyPolynomial(Polynomial3[]x,Polynomial3[]y,Polynomial3[]z) {
-		//z = x * y, 다항식 z의 항의 수는 terms으로 리턴한다 
-		//terms = addTerm(z, term, terms);사용하여 곱셈항을 추가한다.
-		int p=0,q=0,r=0;
-		int terms = 0;
-		//구현코드
-		return terms;
-	}
-	static double EvaluatePolynomial(Polynomial3[]z, int zTerms, int value) {
-		//zTerms는 다항식 z의 항의 수, value는 f(x)를 계산하기 위한 x 값
-		//다항식 계산 결과를 double로 리턴한다 
-		double result = 0.0;
-		//구현 코드
-		return result;
-	}
-	public static void main(String[] args) {
-		Polynomial3[] x = {
-		         new Polynomial3(1.5, 3),
-		         new Polynomial3(2.5, 7),
-		         new Polynomial3(3.3, 2),
-		         new Polynomial3(4.0, 1),
-		         new Polynomial3(2.2, 0),
-		         new Polynomial3(3.1, 4),
-		         new Polynomial3(3.8, 5),
-		     };
-		Polynomial3[] y = {
-		         new Polynomial3(1.5, 1),
-		         new Polynomial3(2.5, 2),
-		         new Polynomial3(3.3, 3),
-		         new Polynomial3(4.0, 0),
-		         new Polynomial3(2.2, 4),
-		         new Polynomial3(3.1, 5),
-		         new Polynomial3(3.8, 6),
-		     };
-		int nx = x.length;
+    static void MergeSort(Polynomial3[] a, int left, int right) {
+        if (left >= right) return;
+        int mid = (left + right) / 2;
+        MergeSort(a, left, mid);
+        MergeSort(a, mid + 1, right);
+        merge(a, left, mid, mid + 1, right);
+    }
 
+    static void ShowPolynomial(String str, Polynomial3[] x, int count) {
+        System.out.print(str);
+        int n = count < 0 ? x.length : count;
+        for (int i = 0; i < n; i++) {
+            if (i != 0) System.out.print(" + ");
+            System.out.printf("%.1fx**%d", x[i].coef, x[i].exp);
+        }
+        System.out.println();
+    }
 
-		ShowPolynomial("다항식 x = ", x, -1);
-		ShowPolynomial("다항식 y = ", y, -1);
-		MergeSort(x, 0, x.length - 1); // 배열 x를 퀵정렬
-		MergeSort(y, 0, y.length - 1); // 배열 x를 퀵정렬
-		ShowPolynomial("정렬후 다항식 x = ", x, -1);
-		ShowPolynomial("정렬후 다항식 y = ", y, -1);
-		
-		Polynomial3[] z = new Polynomial3[20];
-		
-		for (int i =0; i < z.length; i++)
-			z[i] = new Polynomial3();
-	
-		int zTerms = AddPolynomial(x,y,z);//다항식 덧셈 z = x + y
-		ShowPolynomial("덧셈후 다항식 z = ", z, zTerms);
+    static int AddPolynomial(Polynomial3[] x, Polynomial3[] y, Polynomial3[] z) {
+        int p = 0, q = 0, terms = 0;
+        while (p < x.length && q < y.length && x[p] != null && y[q] != null) {
+            if (x[p].exp == y[q].exp) {
+                terms = addTerm(z, new Polynomial3(x[p].coef + y[q].coef, x[p].exp), terms);
+                p++; q++;
+            } else if (x[p].exp > y[q].exp) {
+                terms = addTerm(z, x[p++], terms);
+            } else {
+                terms = addTerm(z, y[q++], terms);
+            }
+        }
+        while (p < x.length && x[p] != null) terms = addTerm(z, x[p++], terms);
+        while (q < y.length && y[q] != null) terms = addTerm(z, y[q++], terms);
+        return terms;
+    }
 
-		
-		zTerms = MultiplyPolynomial(x,y,z);//다항식 곱셈 z = x * y
-		MergeSort(z, 0, zTerms); // 배열 x를 퀵정렬
-		ShowPolynomial("곱셈후 다항식 z = ", z, zTerms);
-		double result = EvaluatePolynomial(z, zTerms, 1);//다항식 값 계산 함수 z(10) 값 계산한다 
-		System.out.println(" result = " + result );
-	}
+    static int addTerm(Polynomial3[] z, Polynomial3 term, int terms) {
+        for (int i = 0; i < terms; i++) {
+            if (z[i].exp == term.exp) {
+                z[i].coef += term.coef;
+                return terms;
+            }
+        }
+        z[terms] = new Polynomial3(term.coef, term.exp);
+        return ++terms;
+    }
+
+    static int MultiplyPolynomial(Polynomial3[] x, Polynomial3[] y, Polynomial3[] z) {
+        int terms = 0;
+        for (Polynomial3 valueX : x) {
+            if (valueX == null) break;
+            for (Polynomial3 valueY : y) {
+                if (valueY == null) break;
+                Polynomial3 term = new Polynomial3(valueX.coef * valueY.coef, valueX.exp + valueY.exp);
+                terms = addTerm(z, term, terms);
+            }
+        }
+        return terms;
+    }
+
+    static double EvaluatePolynomial(Polynomial3[] z, int zTerms, int value) {
+        double result = 0.0;
+        for (int i = 0; i < zTerms; i++) {
+            result += z[i].coef * Math.pow(value, z[i].exp);
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Polynomial3[] x = {
+            new Polynomial3(1.5, 3), new Polynomial3(2.5, 7), new Polynomial3(3.3, 2),
+            new Polynomial3(4.0, 1), new Polynomial3(2.2, 0), new Polynomial3(3.1, 4), new Polynomial3(3.8, 5),
+        };
+        Polynomial3[] y = {
+            new Polynomial3(1.5, 1), new Polynomial3(2.5, 2), new Polynomial3(3.3, 3),
+            new Polynomial3(4.0, 0), new Polynomial3(2.2, 4), new Polynomial3(3.1, 5), new Polynomial3(3.8, 6),
+        };
+
+        ShowPolynomial("다항식 x = ", x, -1);
+        ShowPolynomial("다항식 y = ", y, -1);
+
+        MergeSort(x, 0, x.length - 1);
+        MergeSort(y, 0, y.length - 1);
+
+        ShowPolynomial("정렬후 다항식 x = ", x, -1);
+        ShowPolynomial("정렬후 다항식 y = ", y, -1);
+
+        Polynomial3[] z = new Polynomial3[50];
+        for (int i = 0; i < z.length; i++) z[i] = new Polynomial3();
+
+        int zTerms = AddPolynomial(x, y, z);
+        ShowPolynomial("덧셈후 다항식 z = ", z, zTerms);
+
+        zTerms = MultiplyPolynomial(x, y, z);
+        MergeSort(z, 0, zTerms - 1);
+        ShowPolynomial("곱셈후 다항식 z = ", z, zTerms);
+
+        double result = EvaluatePolynomial(z, zTerms, 1);
+        System.out.println("result = " + result);
+    }
 }

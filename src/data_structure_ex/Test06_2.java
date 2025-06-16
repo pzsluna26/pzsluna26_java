@@ -1,23 +1,53 @@
 package data_structure_ex;
 
-/*
+ /*
  * 6장 구현 실습과제2
  */
-/*
+
 class PhyscData implements Comparable<PhyscData>{
     String name;              // 이름
     int    height;            // 키
     double vision;            // 시력
-
-
-
+	public PhyscData(String name, int height, double vision) {
+		this.name = name;
+		this.height = height;
+		this.vision = vision;
+	}
+	// 키를 기준으로 비교
+	public int compareTo(PhyscData p) {
+		return this.height - p.height;
+	}
 }
-*/
+
 public class Test06_2 {
 	// --- 배열 요소 a[idx1]와 a[idx2]의 값을 교환 ---//
-	static void merge(PhyscData[] a, int lefta, int righta, int leftb, int rightb ) {
+	static void merge(PhyscData[] a, int pl1, int pr1, int pl2, int pr2 ) {
+		int size = pr1 - pl1 +1; //병합될 배열 사이즈 
+		PhyscData[] temp = new PhyscData[size]; //임시배열 
+		
+		int i = pl1;
+		int j = pl2;
+		int k = 0;
+		
+		//두 배열을 비교하면서 작은 것을 temp에 넣기
+		while(i <= pr1 && j <= pr2) {
+			if(a[i].compareTo(a[j]) <= 0)
+				temp[k++] = a[i++];
+			else
+				temp[k++] = a[j++];
+		}
+		// 남은 요소 복사 (왼쪽 구간)
+        while (i <= pr1)
+            temp[k++] = a[i++];
 
+        // 남은 요소 복사 (오른쪽 구간)
+        while (j <= pr2)
+            temp[k++] = a[j++];
 
+        // temp 배열을 원래 배열에 복사
+        for (int m = 0; m < size; m++)
+            a[pl1 + m] = temp[m];
+  
 	}
 
 	// --- 퀵 정렬(비재귀 버전)---//
