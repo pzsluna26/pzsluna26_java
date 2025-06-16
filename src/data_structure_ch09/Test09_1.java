@@ -13,6 +13,8 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 
+import data_structure_ch09.ObjectStack5.EmptyGenericStackException;
+
 class TreeNode5 {
 	TreeNode5 LeftChild;
 	int data;
@@ -193,8 +195,13 @@ class Tree5 {
 	}
 
 	boolean isLeafNode(TreeNode5 current) {//current 가 leaf node 인지 조사 
-
+		if (current.LeftChild == null && current.RightChild == null) 
+			return true;	
+		else 
+			return false;
 	}
+	
+
 
 	void inorder() {//main에서 호출되는 driver function
 		inorder(root); // workhorse호출
@@ -239,7 +246,7 @@ class Tree5 {
 		}
 	}
 
-	void NonrecInorder()//void Tree5::inorder(TreeNode5 *CurrentNode)와 비교
+	void NonrecInorder() throws EmptyGenericStackException//void Tree5::inorder(TreeNode5 *CurrentNode)와 비교
 	//stack을 사용한 inorder 출력
 	//non-recursive 코드를 이해하는 학습 필요
 	{
@@ -251,18 +258,16 @@ class Tree5 {
 				CurrentNode = CurrentNode.LeftChild;
 			}
 			if (!s.isEmpty()) {
-				try {
-					CurrentNode = s.pop();
-				} catch (Chap9_Tree.ObjectStack5.EmptyGenericStackException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				CurrentNode = s.pop();
 				System.out.println(" " + CurrentNode.data);
 				CurrentNode = CurrentNode.RightChild;
 			}
 			else break;  
 		}
 	}
+	
+	
+	
 	void levelOrder() //level 별로 출력한다. level이 증가하면 다음줄에 출력한다 >> 선택 사항 
 	//난이도: 최상급 구현 
 	// queue를 사용한 구현
@@ -272,6 +277,8 @@ class Tree5 {
 		
 	}
 
+	
+	
 	boolean insert(int x) {// binary search tree를 만드는 입력 : left subtree < 노드 x < right subtree
 		//inorder traversal시에 정렬된 결과가 나와야 한다
 		TreeNode5 p = root;
@@ -299,10 +306,40 @@ class Tree5 {
 		//난이도 중상
 		//삭제 대상이 leaf node인 경우, non-leaf node로 구분하여 구현한다 
 		TreeNode5 p = root, q = null, parent = null;
-		int branchMode = 0; // 1은 left, 2는 right
-		
+		int branchMode = 0; // 1은 left, 2는 right 오른쪽인지 왼쪽인지 설정
+		while (p != null) {
+			if(num>p.data) {
+			q=p;
+			p = p.RightChild;
+			branchMode = 1; //왼쪽으로 설정
+			}
+			else if (num < p.data) {
+				q=p;
+				p=p.LeftChild;
+				branchMode=2; //오른쪽으로 설정
+			}
+			else {//삭제할 값
+				//삭제
+				if(isLeafNode(p) == true) {
+					if(branchMode == 1)
+						q.LeftChild = null;
+					else 
+						q.RightChild =null;
+				} else {
+					if(isOneChild(p) == true) {
+						
+					}else {
+						//child가 2개인 경우
+						//inorder successor를 구하여 replace한다
+						TreeNode5 succ = inorderSucc(p);
+						p.data = succ.data;
+						//delete(succ); //recursive
+						//non-recursive 삭제시에는 p,q를 사용하시오
+ 					}	
+				}
+			}
+		}
 		return false;
-
 	}
 
 	boolean search(int num) {//num 값을 binary search tree에서 검색
