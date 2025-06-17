@@ -35,39 +35,45 @@ public class Maze {
 
     public static void path(int[][] maze, int[][] mark, int m, int p) {
         Stack<Items> stack = new Stack<>();
-        int i = 1, j = 1, dir = 2; // 시작 위치와 방향(동쪽)
+        //출발점 (1,1), 이동 방향 dir = 2(2는 동쪽) 을 스택에 push
+        int i = 1, j = 1, dir = 2;
 
-        stack.push(new Items(i, j, dir));
-
+        stack.push(new Items(i, j, dir+1));
+     
+        //막다른곳을 저장해놓기
         while (!stack.isEmpty()) {
             Items temp = stack.pop();
             i = temp.x;
             j = temp.y;
             dir = temp.dir;
             mark[i][j] = 1;
-
+            
+            //8가지 방향중에서 남은 방향에 대하여
             while (dir < 8) {
-                int g = i + moves[dir].a;
-                int h = j + moves[dir].b;
+            	//현재 위치 (i,j)에 대하여 이동 방향 계산
+                int g = i + moves[dir].a; //예를 들어 dir = 0이면 → moves[0].a = -1 => i행을 -1 이동 
+                int h = j + moves[dir].b; //예를 들어 dir = 0이면 → moves[0].b = 1 => j열을 1이동
 
                 if (g == m && h == p) { // 도착했으면
-                    mark[i][j] = 1;
-                    mark[g][h] = 1;
+                    mark[i][j] = 1; //도착전 좌표 방문표시
+                    mark[g][h] = 1; //도착후 좌표 방문표시
                     System.out.println("path found!");
                     return;
                 }
-
+              
+                // 미로 길이 있고, 가본적이 없으면 => 가보자
                 if (maze[g][h] == 0 && mark[g][h] == 0) {
                     stack.push(new Items(i, j, dir + 1)); // 다음 방향을 위해 현재 위치 저장
                     i = g;
                     j = h;
                     dir = 0;
                     mark[i][j] = 1;
+                // 미로 길이 없거나, 가본적이 있으면 => 방향바꾸자
                 } else {
                     dir++;
                 }
             }
-        }
+        } 
         System.out.println("No path found");
     }
 
