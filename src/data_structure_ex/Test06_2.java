@@ -22,12 +22,13 @@ class PhyscData implements Comparable<PhyscData>{
 public class Test06_2 {
 	// --- 배열 요소 a[idx1]와 a[idx2]의 값을 교환 ---//
 	static void merge(PhyscData[] a, int pl1, int pr1, int pl2, int pr2 ) {
-		int size = pr1 - pl1 +1; //병합될 배열 사이즈 
+		int size = pr2 - pl1 + 1; //병합될 배열 사이즈 
 		PhyscData[] temp = new PhyscData[size]; //임시배열 
 		
 		int i = pl1;
 		int j = pl2;
 		int k = 0;
+		
 		
 		//두 배열을 비교하면서 작은 것을 temp에 넣기
 		while(i <= pr1 && j <= pr2) {
