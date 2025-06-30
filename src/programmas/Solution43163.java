@@ -17,7 +17,6 @@ class BFSQueueSolution {
 			this.depth = depth;
 			this.visited = visited;
 		}
-		
 	}
     public int solution(String begin, String target, String[] words) {
     	if(Arrays.asList(words).contains(target)) {
@@ -27,6 +26,8 @@ class BFSQueueSolution {
     	Set<String> visited = new HashSet<>();
     	queue.offer(new State(begin, 0, visited));
     	visited.add(begin); //초기화
+    	
+    	while (!queue)
         int answer = 0;
         return answer;
     }

@@ -68,20 +68,40 @@ class LinkedList2 {
 	public LinkedList2() {
 		first = null;
 	}
+	
+	//전달된 element를 찾을 때 comparator 객체를 사용한다
+	public int Delete(SimpleObject5 element, Comparator<SimpleObject5> cc) {
 
-	public int Delete(SimpleObject5 element, Comparator<SimpleObject5> cc)
-	//전달된 element를 찾을 때 comparator 객체를 사용한다 
-	{
-		Node2 q, current = first;
-		q = current;
-
-		return -1;// 삭제할 대상이 없다.
+		Node2 current = first;
+		Node2 prev = null;
+		
+		while(current != null) {
+			if(cc.compare(current.data, element) == 0) {
+				// 해당 노드 찾음
+				if(prev == null) {
+					first = current.link;
+				} else {
+					// 중간 또는 마지막 노드 삭제
+					prev.link = current.link;
+				}
+				return 1; 
+				//삭제 성공
+			}
+			prev = current;
+			current = current.link;
+		}
+		return -1;// 삭제 실패(못 찾음)
 	}
+	
+	
 	public void Show() { // 전체 리스트를 순서대로 출력한다.
 		Node2 p = first;
-		SimpleObject5 so;
-
+		while(p != null) {
+			System.out.println(p.data);
+			p = p.link;		
+		}
 	}
+	
 	public void Add(SimpleObject5 element, Comparator<SimpleObject5> cc) 
 	//임의 값을 삽입할 때 리스트가 오름차순으로 정렬이 되도록 한다
 	{
