@@ -65,20 +65,21 @@ class SimpleObject2 {
 	}
 }
 
-class Node<T> {
-	T data; // 데이터
-	Node<T> llink; // 좌측포인터(앞쪽 노드에 대한 참조)
-	Node<T> rlink; // 우측포인터(뒤쪽 노드에 대한 참조)
+class Node4 {
+	SimpleObject2 data; // 데이터
+	Node4 llink; // 좌측포인터(앞쪽 노드에 대한 참조)
+	Node4 rlink; // 우측포인터(뒤쪽 노드에 대한 참조)
 
 }
 
 class DoubledLinkedList2 {
 	private Node4 first; // 머리 포인터(참조하는 곳은 더미노드)
-
+	
 	// --- 생성자(constructor) ---//
 	public DoubledLinkedList2() {
-		first = new Node4(); // dummy(first) 노드를 생성
-
+	    first = new Node4(); // dummy(first) 노드를 생성
+	    first.rlink = first;
+	    first.llink = first;
 	}
 
 	// --- 리스트가 비어있는가? ---//
@@ -88,40 +89,110 @@ class DoubledLinkedList2 {
 
 	// --- 노드를 검색 ---//
 	public boolean search(SimpleObject2 obj, Comparator<? super SimpleObject2> c) {
-
+		Node4 ptr = first.rlink;
+		while(ptr != null && ptr!= first) {
+			if(c.compare(ptr.data, obj)==0) {
+				return true;
+			}
+			ptr = ptr.rlink;
+		}
+		return false;
 	}
 
 	// --- 전체 노드 표시 ---//
 	public void show() {
-
+		Node4 ptr = first.rlink;
+		while (ptr != null && ptr != first) {
+			System.out.println(ptr.data);
+			ptr =ptr.rlink;
+		}
 	}
 
 	// --- 올림차순으로 정렬이 되도록 insert ---//
 	public void add(SimpleObject2 obj, Comparator<? super SimpleObject2> c) {
-
-
+		Node4 newNode = new Node4();
+		@SuppressWarnings("unchecked")
+		Comparable<SimpleObject2> comparableObj = (Comparable<SimpleObject2>) obj;
+		add(obj, (a,b) -> comparableObj.compareTo(b));
 	}
+		
 
 	// --- list에 삭제할 데이터가 있으면 해당 노드를 삭제 ---//
 	public void delete(SimpleObject2 obj, Comparator<? super SimpleObject2> c) {
+	    // 현재노드
+		Node4 current = first.rlink;
+		
+		// 반복구문을 사용해서 current 이동
+	    while (current != null && current != first) {
+	    	// 만약에 obj와 Node4가 같으면 삭제
+	        if (c.compare(current.data, obj) == 0) {
+	            // 연결 해제
+	            current.llink.rlink = current.rlink;
+	            current.rlink.llink = current.llink;
+	            System.out.println("삭제 완료: " + obj);
+	            return;
+	        }
+	        // 아니면 return 해야됨
+	        current = current.rlink;
+	    }
 
+	    System.out.println("삭제할 데이터를 찾을 수 없습니다: " + obj);
 	}
-	public DoubledLinkedList2 merge_NewList(DoubledLinkedList2 lst2, Comparator<SimpleObject2> cc) {
-		//l3 = l1.merge(l2); 실행하도록 리턴 값이 리스트임 
-		//l.add(객체)를 사용하여 구현
-		//기존 리스트의 노드를 변경하지 않고 새로운 리스트의 노드들을 생성하여 구현 
-		DoubledLinkedList2 lst3 = new DoubledLinkedList2();
-		Node4 ai = this.first.rlink, bi = lst2.first.rlink;
 
+	public void addLast(SimpleObject2 obj) {
+	    Node4 newNode = new Node4();
+	    newNode.data = obj;
+	    Node4 last = first.llink;
 
-
-		return lst3;
-
+	    // 새 노드 연결
+	    newNode.rlink = first;        // 새 노드의 다음은 더미 노드
+	    newNode.llink = last;         // 새 노드의 이전은 기존 마지막 노드
+	    last.rlink = newNode;         // 기존 마지막 노드의 다음은 새 노드
+	    first.llink = newNode;        // 더미 노드의 이전은 새 노드
 	}
-	void merge_InPlace(DoubledLinkedList2 b, Comparator<SimpleObject2> cc) {
+
+
+	public DoubledLinkedList2 mergeNewList(DoubledLinkedList2 lst2, Comparator<SimpleObject2> cc) {
+	    DoubledLinkedList2 lst3 = new DoubledLinkedList2();
+	    Node4 ai = this.first.rlink;
+	    Node4 bi = lst2.first.rlink;
+	    
+	    // 크기가 같으면 반복돌고, 크기가 다르면 퀵소트 처럼 반복돌고 남은거 붙여야함
+	    // 사이즈 건들지마라 
+	    while (ai != this.first && bi != lst2.first) {
+	    	// 해드로 가지마라
+	        if (cc.compare(ai.data, bi.data) <= 0) {
+	        	// ai 가  bi보다 작음
+	        	// 추가해야함 (addLast 이용해서 추가) ai
+	            lst3.addLast(new SimpleObject2(ai.data.no, ai.data.name, ai.data.expire));
+	            ai = ai.rlink;
+	            //else
+	            // 추가해야함 (addLast 이용해서 추가)	bi
+	            } else {
+	            lst3.addLast(new SimpleObject2(bi.data.no, bi.data.name, bi.data.expire));
+	            bi = bi.rlink;
+	        }
+	    }
+	    // ai에 남은 LinkedList를 순회해서 뒷부분에 추가
+	    while (ai != this.first) {
+	        lst3.addLast(new SimpleObject2(ai.data.no, ai.data.name, ai.data.expire));
+	        ai = ai.rlink;
+	    }
+	    // bi에 남은 LinkedList를 순회해서 뒷부분에 추가
+	    while (bi != lst2.first) {
+	        lst3.addLast(new SimpleObject2(bi.data.no, bi.data.name, bi.data.expire));
+	        bi = bi.rlink;
+	    }
+	    return lst3;
+	}
+
+	
+	// 새로운 linkedlist를 만들지않는다. =>  노드를 직접 포인터 연결만 변경
+	void mergeInPlace(DoubledLinkedList2 b, Comparator<SimpleObject2> cc) {
 		/*
 		 * 연결리스트 a,b에 대하여 a = a + b
-		 * merge하는 알고리즘 구현으로 in-place 방식으로 합병/이것은 새로운 노드를 만들지 않고 합병하는 알고리즘 구현
+		 * merge하는 알고리즘 구현으로 in-place 방식으로 합병
+		 * 이것은 새로운 노드를 만들지 않고 합병하는 알고리즘 구현
 		 * 난이도 등급: 최상급
 		 * 회원번호에 대하여 a = (3, 5, 7), b = (2,4,8,9)이면 a = (2,3,4,5,8,9)가 되도록 구현하는 코드
 		 */
@@ -221,7 +292,7 @@ public class Test08_6 {
 				lst1.show();
 				System.out.println("리스트 lst2::");
 				lst2.show();
-				lst3= lst1.merge_NewList(lst2, SimpleObject2.NO_ORDER);
+				lst3= lst1.mergeNewList(lst2, SimpleObject2.NO_ORDER);
 				//merge 실행후 show로 결과 확인 - 새로운 노드를 만들지 않고 합병 - 난이도 상
 				System.out.println("병합 리스트 lst3::");
 				lst3.show();	
@@ -240,7 +311,7 @@ public class Test08_6 {
 				lst2.show();
 				System.out.println("리스트 lst4::");
 				lst4.show();
-				lst4.merge_NewList(lst2, SimpleObject2.NO_ORDER);
+				lst4.mergeNewList(lst2, SimpleObject2.NO_ORDER);
 				//merge 실행후 show로 결과 확인 - 새로운 노드를 만들지 않고 합병 - 난이도 상
 				System.out.println("병합 리스트 lst4::");
 				lst4.show();
